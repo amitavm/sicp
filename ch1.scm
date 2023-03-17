@@ -148,3 +148,21 @@
 ;; Oh, BTW: we have made use of block structure and internal/inner/embedded
 ;; definitions---introduced in the next section---for this implementation, in
 ;; case you were wondering why this code looks a little "strange".
+
+;; Here's the square-root procedure again, reimplemented using block structure
+;; and inner/embedded definitions, as given in the next section.  Note the this
+;; doesn't include the improvement to good-enough? shown above.
+(define (sqrt x)
+  (define (square x)
+    (* x x))
+  (define (good-enough? guess)
+    (< (abs (- (square guess) x)) 0.001))
+  (define (average x y)
+    (/ (+ x y) 2))
+  (define (improve guess x)
+    (average guess (/ x guess)))
+  (define (sqrt-iter guess)
+    (if (good-enough? guess)
+	guess
+	(sqrt-iter (improve guess))))
+  (sqrt-iter 1.0))
