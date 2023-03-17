@@ -166,3 +166,28 @@
 	guess
 	(sqrt-iter (improve guess))))
   (sqrt-iter 1.0))
+
+;; A definition of the factorial function that creates a linear *recursive*
+;; process:
+(define (factorial n)
+  (if (= n 1)
+      1
+      (* n (factorial (- n 1)))))
+
+;; And here's a modified version of the factorial function that creates a
+;; linear *iterative* process:
+(define (factorial n)
+  ;; This implementation makes use of this inner auxiliary function so that its
+  ;; execution gives rise to a linear iterative process.  This function returns
+  ;; the product p when the counter c exceeds n.  Note that the computation of
+  ;; the result---the factorial---is happening in the parameters/values passed
+  ;; to the (recursive) calls to this function, not in its body!
+  (define (fact-iter p c)
+    (if (> c n)
+	p
+	(fact-iter (* p c) (+ c 1))))
+  (fact-iter 1 1))
+
+;; The advantage of a linear iterative process, over a linear recursive
+;; process, is that most scheme implementations are able to execute them in
+;; constant space, using tail-call optimization.
