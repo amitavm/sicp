@@ -191,3 +191,29 @@
 ;; The advantage of a linear iterative process, over a linear recursive
 ;; process, is that most scheme implementations are able to execute them in
 ;; constant space, using tail-call optimization.
+
+;; Exercise 1.9
+;;
+;; The first definition results in this sequence of calls when (+ 4 5) is
+;; evaluated:
+;;
+;; (inc (+ 3 5))
+;; (inc (inc (+ 2 5)))
+;; (inc (inc (inc (+ 1 5))))
+;; (inc (inc (inc (inc (+ 0 5)))))
+;; (inc (inc (inc (inc 5))))
+;; (inc (inc (inc 6)))
+;; (inc (inc 7))
+;; (inc 8)
+;; 9
+;;
+;; This is clearly a linear recursive process.  On the other hand, the second
+;; definition produces this sequence of calls:
+;;
+;; (+ 3 6)
+;; (+ 2 7)
+;; (+ 1 8)
+;; (+ 0 9)
+;; 9
+;;
+;; This is a linear iterative process.
