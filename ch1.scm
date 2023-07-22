@@ -217,3 +217,75 @@
 ;; 9
 ;;
 ;; This is a linear iterative process.
+
+;; Exercise 1.10
+;;
+;; This is the definition of Ackermann's function in Scheme, as given in the
+;; book in the exercise:
+(define (A x y)
+  (cond ((= y 0) 0)
+	((= x 0) (* 2 y))
+	((= y 1) 2)
+	(else (A (- x 1) (A x (- y 1))))))
+
+;; It's trivial to simply evaluate the values of the given expressions at the
+;; REPL (after evaluating the above definition in the REPL).  However, it's
+;; more interesting to try and do these on paper and figure out the values
+;; yourself.  Ackermann's function is a crazy (deep?) function in math.
+;; Working out these values will give you some experience with it.
+;;
+;; Anyway, the values are:
+;;
+;; (A 1 10) => 1024 [(A 1 n) is basically 2^n]
+;; (A 2 4) => 
+
+;; Recursive and iterative computations of Fibonacci numbers, as given in
+;; section 1.2.2.  First the (tree) recursive version:
+(define (fib n)
+  (cond ((= n 0) 0)
+	((= n 1) 1)
+	(else (+ (fib (- n 1))
+		 (fib (- n 2))))))
+
+;; Even though this works, it's very inefficient: its runtime grows
+;; *exponentially* with n.  Here's a much better, (linear) iterative
+;; implementation:
+(define (fib n)
+  (define (fib-iter a b i)
+    (if (= i n)
+	a
+	(fib-iter (+ a b) a (+ i 1))))
+  (fib-iter 0 1 0))
+
+;; Here's the counting-change procedure, as given in the same section.
+;; (Slightly modified to use block structure and inner definitions.)
+(define (count-change amount)
+  (define (denom k)
+    ;; Return the k-th denomination in our set of denominations.
+    (cond ((= k 1) 1)
+	  ((= k 2) 5)
+	  ((= k 3) 10)
+	  ((= k 4) 25)
+	  ((= k 5) 50)))
+  (define (cc n k)
+    ;; Return the number of ways we can produce change for the amount n using k
+    ;; types of denominations.
+    (cond ((= n 0) 1)
+	  ((or (< n 0) (= k 0)) 0)
+	  (else (+ (cc n (- k 1))
+		   (cc (- n (denom k)) k)))))
+  (cc amount 5))
+
+;; When I initially saw this solution (in the book), I had difficulty
+;; understanding the "first degenerate case: the number of ways to produce
+;; change when the amount is exactly 0 is 1."  I thought it should be 0.  Do we
+;; take this value to be 1 just to maintain some sort of mathematical
+;; consistency or convenience?
+;;
+;; The answer seems to be: no, it's not just for mathematical reasons.  It's
+;; also critical to get the right answer, as you can verify for simple cases
+;; like (count-change 2).  If we use the value 0 for that case, we get the
+;; wrong answer (0), whereas with the value used above (1), it gives us the
+;; right answer (1).  So it's some food for thought: why is it correct to take
+;; the number of ways to produce change for the amount 0 to be 1?  Does it make
+;; sense intuitively?
