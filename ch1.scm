@@ -311,3 +311,19 @@
 	  ((> i n) i-1)
 	  (else (aux i-2 i-1 (+ i-1 (* 2 i-2) (* 3 i-3)) (+ i 1)))))
   (aux 0 1 2 3))
+
+;; Exercise 1.12
+;;
+;; The following procedure computes the elements of Pascal triangle, given the
+;; row and column numbers.
+(define (pascal r c)
+  (if (or (= c 1) (= r c))
+      1
+      (+ (pascal (- r 1) (- c 1))
+	 (pascal (- r 1) c))))
+
+;; Note that this implementation *depends* on the user passing only valid
+;; values (positive integers) for r and c.  If 0 or negative integers are
+;; passed in, this procedure will get into an infinite recursion.  We don't
+;; know how to deal with such things properly in Scheme yet: should we return
+;; some kind of a null value in such cases, or throw an exception?
