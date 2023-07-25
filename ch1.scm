@@ -282,10 +282,10 @@
 ;; take this value to be 1 just to maintain some sort of mathematical
 ;; consistency or convenience?
 ;;
-;; The answer seems to be: no, it's not just for mathematical reasons.  It's
-;; also critical to get the right answer, as you can verify for simple cases
-;; like (count-change 2).  If we use the value 0 for that case, we get the
-;; wrong answer (0), whereas with the value used above (1), it gives us the
-;; right answer (1).  So it's some food for thought: why is it correct to take
-;; the number of ways to produce change for the amount 0 to be 1?  Does it make
-;; sense intuitively?
+;; The answer seems to be: no, it's not just for mathematical/theoretical
+;; reasons.  It's *required* to get the right answer, as you can verify for
+;; simple cases like (count-change 2).  If we use the value 0 for that
+;; (degenerate) case, we get the wrong answer (0), whereas with the value used
+;; above (1), it gives us the right answer (1).  So it's some food for thought:
+;; why is it correct to take the number of ways to produce change for the
+;; amount 0 to be 1?  Does it make sense intuitively?
