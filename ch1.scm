@@ -289,3 +289,25 @@
 ;; above (1), it gives us the right answer (1).  So it's some food for thought:
 ;; why is it correct to take the number of ways to produce change for the
 ;; amount 0 to be 1?  Does it make sense intuitively?
+
+;; Exercise 1.11
+;;
+;; f(n) = 3 if n < 3
+;;      = f(n-1) + 2f(n-2) + 3f(n-3) if n >= 3.
+;;
+;; Here's a way to compute f(n) using a recursive process:
+(define (f-recursive n)
+  (if (< n 3)
+      n
+      (+
+       (f (- n 1))
+       (* 2 (f (- n 2)))
+       (* 3 (f (- n 3))))))
+
+;; And here's how we can implement this using a linear-iterative process:
+(define (f-iterative n)
+  (define (aux i-3 i-2 i-1 i)
+    (cond ((< n 3) n)
+	  ((> i n) i-1)
+	  (else (aux i-2 i-1 (+ i-1 (* 2 i-2) (* 3 i-3)) (+ i 1)))))
+  (aux 0 1 2 3))
