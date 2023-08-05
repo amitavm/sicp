@@ -327,3 +327,32 @@
 ;; passed in, this procedure will get into an infinite recursion.  We don't
 ;; know how to deal with such things properly in Scheme yet: should we return
 ;; some kind of a null value in such cases, or throw an exception?
+
+;; Exercise 1.13
+;;
+;; I could prove the proposition mention in the hint (using induction), but I'm
+;; not sure how that can be used to prove the main question in the exercise
+;; (that Fib(n) is the closest integer to...)!
+
+;; Exercise 1.14
+;;
+;; You should do the first part (drawing the tree for the generated process for
+;; 11 cents) on paper; it's difficult to show that here.
+;;
+;; For the orders of growth of space and number of steps, notice that the tree
+;; is similar to that for the tree-recursive version of the `fib` procedure (to
+;; compute the terms in the Fibonacci series).  So the space should grow
+;; linearly with n (the amount to be changed), and the number of steps should
+;; grow exponentially with n.
+
+;; Exercise 1.15
+;;
+;; The sine procedure, as given in this exercise, generates a simpler process
+;; compared to the count-change procedure: it's a linear recursive one.
+;;
+;; For part a, we can determine the number of times the procedure p is called
+;; by successively dividing 12.15 by 3 till we get a number that's less than
+;; 0.1.  In this case, p will be called 5 times.
+;;
+;; For part b, the orders of growth for both the space and time are linear (as
+;; is the case for linear recursive processes).
