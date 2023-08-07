@@ -356,3 +356,24 @@
 ;;
 ;; For part b, the orders of growth for both the space and time are linear (as
 ;; is the case for linear recursive processes).
+
+;; This is the "fast exponentiation" procedure given in section 1.2.4:
+(define (fast-expt b n)
+  (define (square x) (* x x))
+  (cond ((= n 0) 1)
+	((even? n) (square (fast-expt b (/ n 2))))
+	(else (* b (fast-expt b (- n 1))))))
+
+;; This version computes the base b raised to the power n in logarithmic number
+;; of steps.  But it generates a recursive process.  Exercise 1.16 asks us to
+;; re-implement this algorithm so that it generates an iterative process.
+
+;; Exercise 1.16
+;;
+;; This is a linear-iterative version of fast-expt.
+(define (fast-expt-iter b n)
+  (define (aux b n p)
+    (cond ((= n 0) p)
+	  ((even? n) (aux (* b b) (/ n 2) p))
+	  (else (aux b (- n 1) (* p b)))))
+  (aux b n 1))
