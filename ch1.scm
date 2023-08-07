@@ -377,3 +377,28 @@
 	  ((even? n) (aux (* b b) (/ n 2) p))
 	  (else (aux b (- n 1) (* p b)))))
   (aux b n 1))
+
+;; Exercise 1.17
+;;
+;; This algorithm is analogous to fast-expt, but for multiplication.
+(define (fast-mult a b)
+  (define (double x) (+ x x))
+  (define (halve x) (/ x 2))
+  (cond ((= b 1) a)
+	((< b 0) (- (fast-mult a (- b)))) ;Avoid infinite recursion.
+	((even? b) (double (fast-mult a (halve b))))
+	(else (+ a (fast-mult a (- b 1))))))
+
+;; Exercise 1.18
+;;
+;; This is a linear-iterative version of fast-mult, in the spirit of
+;; fast-expt-iter above.
+(define (fast-mult-iter a b)
+  (define (double x) (+ x x))
+  (define (halve x) (/ x 2))
+  (define (aux x y p)
+    (cond ((= y 1) (+ x p))
+	  ((< y 0) (- (aux x (- y) p)))	;Avoid infinite recursion.
+	  ((even? y) (aux (double x) (halve y) p))
+	  (else (aux x (- y 1) (+ x p)))))
+  (aux a b 0))
